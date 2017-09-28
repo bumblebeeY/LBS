@@ -4,12 +4,6 @@
  * 创建日期：2017/9/26
  * 历史修订：
  */
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
 import List from './list';
 import Detail from './Detail';
 import Map from './map';
@@ -18,25 +12,20 @@ const ModalStack = StackNavigator({
     List: {
         screen: List,
         navigationOptions: {
-            headerTitle:'餐饮',
+            headerTitle: '餐饮',
         }
     },
     Detail: {
         screen: Detail,
+        navigationOptions: {tabBarVisible: false}
     },
-    Map:{
+    Map: {
         screen: Map,
+        navigationOptions: {tabBarVisible: false}
+    }
+}, {
+    initialRouteParams: {
+        type: '餐饮'
     }
 });
-export default class extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <ModalStack screenProps={{type: "餐饮"}}>
-            </ModalStack>
-        )
-    }
-}
+module.exports = ModalStack;

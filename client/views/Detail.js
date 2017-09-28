@@ -26,7 +26,8 @@ export default class extends Component {
         headerTintColor: '#FFF',
         headerTitleStyle:{
             alignSelf:"center"
-        }
+        },
+        tabBarVisible:false,
     });
     constructor(props) {
         super(props);

@@ -24,7 +24,7 @@ const _GEO_OPEN = false;
 const _GEO_TEST_POS = '121.390686,31.213976';
 
 export default class extends Component {
-    static navigationOptions = ({navigation,screenProps}) => ({
+    static navigationOptions = ({navigation}) => ({
         headerStyle: {
             backgroundColor: '#1296db',
         },
@@ -32,7 +32,7 @@ export default class extends Component {
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('Map',{
-                        type:screenProps.type
+                        type:navigation.state.params.type
                     })
                 }}
             >
@@ -56,7 +56,7 @@ export default class extends Component {
     componentDidMount() {
         let that = this;
         let url = Util.searchURL + 'key=' + Util.amapKey + '&keywords='
-            + this.props.screenProps.type + '&extensions=base';
+            + that.props.navigation.state.params.type + '&extensions=base';
         url += '&location=' + _GEO_TEST_POS;
         that._doGetData(url);
         // Geolocation.getCurrentPosition(function (data) {
@@ -105,7 +105,7 @@ export default class extends Component {
         navigate("Detail", {
             id: id,
             name: name,
-            type: this.props.screenProps.type
+            type: this.props.navigation.state.params.type
         })
     }
 
@@ -117,14 +117,16 @@ export default class extends Component {
 
     _loadMap() {
         const {navigate} = this.props.navigation;
-        navigate("Map", {})
+        navigate("Map", {
+            type:this.props.navigation.state.params.type
+        })
     }
 
     _onEndEditing() {
         let that = this;
         let keywords = this.state.keywords;
         let url = Util.searchURL + 'key=' + Util.amapKey + '&keywords='
-            + keywords + '&types=' + that.props.screenProps.type + '&extensions=base';
+            + keywords + '&types=' + this.props.navigation.state.params.type + '&extensions=base';
         that.setState({
             list: null
         });
@@ -151,7 +153,7 @@ export default class extends Component {
             posArr.push(data.pois[i].location);
         }
         let posStr = posArr.join(',');
-        AsyncStorage.setItem('_' + this.props.screenProps.type, posStr);
+        AsyncStorage.setItem('_' + 'canyin', posStr);
     }
 
     //拨打电话
@@ -167,7 +169,6 @@ export default class extends Component {
             alert('没有提供号码');
         }
     }
-
     render() {
         let items = [];
         if (this.state.list) {
@@ -200,7 +201,7 @@ export default class extends Component {
                 )
             }
         }
-        let placeholder = '搜索' + this.props.screenProps.type;
+        let placeholder = '搜索' + this.props.navigation.state.params.type;
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.searchBg}>

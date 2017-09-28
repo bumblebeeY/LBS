@@ -4,12 +4,6 @@
  * 创建日期：2017/9/26
  * 历史修订：
  */
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
 import List from './list';
 import Detail from './Detail';
 import Map from './map';
@@ -19,23 +13,20 @@ const ModalStack = StackNavigator({
         screen: List,
         navigationOptions: {
             headerTitle:'电影',
+            initialRouteParams:'电影'
         }
     },
     Detail: {
         screen: Detail,
+        navigationOptions: {tabBarVisible: false}
     },
     Map:{
         screen: Map,
+        navigationOptions: {tabBarVisible: false}
+    }
+}, {
+    initialRouteParams: {
+        type: '电影'
     }
 });
-export default class extends Component{
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return (
-            <ModalStack screenProps={{type: "电影"}}>
-            </ModalStack>
-        )
-    }
-}
+module.exports=ModalStack;
